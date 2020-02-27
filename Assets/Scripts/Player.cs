@@ -21,11 +21,9 @@ public class Player : MonoBehaviour
     public void makeIt()
     {
         this.gameObject.AddComponent<It>();
-        GetComponent<SpriteRenderer>().material.SetColor("Red", Color.red);
     }
     public void unmakeIt()
     {
         Destroy(GetComponent<It>());
-        GetComponent<SpriteRenderer>().material.SetColor("White", Color.white);
     }
 }
