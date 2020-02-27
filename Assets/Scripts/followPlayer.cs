@@ -16,7 +16,7 @@ public class followPlayer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        this.transform.position = new Vector3(Mathf.Lerp(this.transform.position.x, playerTrans.position.x, lerpVal), this.transform.position.y, this.transform.position.z);
+        this.transform.position = new Vector3(Mathf.Lerp(this.transform.position.x, playerTrans.position.x, lerpVal), Mathf.Lerp(this.transform.position.y, playerTrans.position.y, lerpVal), this.transform.position.z);
 		
 	}
 }
