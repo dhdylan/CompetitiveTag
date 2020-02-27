@@ -16,6 +16,5 @@ public class UserInput : MonoBehaviour
     {
         movementInput.GetInput();
         movementController.Move(movementInput);
-        Debug.Log(movementInput.directionalInput + "      &&      " + movementInput.jump);
     }
 }
