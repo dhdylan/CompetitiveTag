@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 866399950269721231}
   - component: {fileID: 866399950269721216}
   - component: {fileID: 4744477633014317659}
-  - component: {fileID: 4860973851790312568}
+  - component: {fileID: 2757689625604075932}
+  - component: {fileID: 6564602366519655581}
   m_Layer: 9
   m_Name: NPC
   m_TagString: Untagged
@@ -206,7 +207,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   totalHorizontalRays: 8
   totalVerticalRays: 4
---- !u!114 &4860973851790312568
+--- !u!114 &2757689625604075932
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -215,6 +216,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 866399950269721217}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 184a6085ab6215f41a8d1d8fa85f28c6, type: 3}
+  m_Script: {fileID: 11500000, guid: ac13c8eeb1e9c3c4ca76e7f4d8422a0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gravity: -25
+  runSpeed: 8
+  groundDamping: 20
+  inAirDamping: 5
+  jumpHeight: 3
+--- !u!95 &6564602366519655581
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 866399950269721217}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
