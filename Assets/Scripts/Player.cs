@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private double totalItTime = 0;
+    [SerializeField]
+    private double _totalItTime = 0;
+    public double totalItTime
+    {
+        get
+        {
+            return _totalItTime;
+        }
+    }
+
     public void addItTime(double itTime)
     {
-        totalItTime += itTime;
+        _totalItTime += itTime;
     }
     public void makeIt()
     {

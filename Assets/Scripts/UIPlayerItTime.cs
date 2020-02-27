@@ -1,18 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using TMPro;
 
 public class UIPlayerItTime : MonoBehaviour
 {
-    // Start is called before the first frame update
+    Player player;
+    TextMeshProUGUI tMProComponent;
+
     void Start()
     {
-        
+        player = GameObject.Find("Player").GetComponent<Player>();
+        tMProComponent = GetComponent<TextMeshProUGUI>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        tMProComponent.SetText(Math.Round(player.totalItTime, 2).ToString());
     }
 }
