@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class simpleMovement : MonoBehaviour
+public class MovementController : MonoBehaviour
 {
     public Vector2 deltaMove;
     private CharacterController2D characterController2D;
