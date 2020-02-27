@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MovementController : MonoBehaviour
 {
-    public Vector2 deltaMove;
     private CharacterController2D characterController2D;
 
     void Start()

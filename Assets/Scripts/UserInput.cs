@@ -5,6 +5,11 @@ using UnityEngine;
 public class UserInput : MonoBehaviour
 {
     private MovementController movementController;
+
+    void Start()
+    {
+        movementController = GetComponent<MovementController>();
+    }
     void Update()
     {
         Vector2 directionalInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
