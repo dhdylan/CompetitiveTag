@@ -1870,6 +1870,10 @@ PrefabInstance:
       propertyPath: _skinWidth
       value: 0.013
       objectReference: {fileID: 0}
+    - target: {fileID: 461381828, guid: 80ece1eb99011e54caf1e352c4c84bf7, type: 3}
+      propertyPath: ignoreOneWayPlatformsThisFrame
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2709572529734522618, guid: 80ece1eb99011e54caf1e352c4c84bf7,
         type: 3}
       propertyPath: m_Name
