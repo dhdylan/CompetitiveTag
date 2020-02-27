@@ -7,12 +7,12 @@ using UnityEngine;
 public class UIMatchTimer : MonoBehaviour
 {
     GameManager gameManager;
-    TextMeshPro tMProComponent;
+    TextMeshProUGUI tMProComponent;
 
     void Start()
     {
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
-        tMProComponent = GetComponent<TextMeshPro>();
+        tMProComponent = GetComponent<TextMeshProUGUI>();
     }
 
     void Update()
