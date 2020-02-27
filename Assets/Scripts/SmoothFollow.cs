@@ -6,6 +6,8 @@ public class SmoothFollow : MonoBehaviour
 {
 	public Transform target;
 	public float smoothDampTime = 0.2f;
+    [Range(.01f, 1f)]
+    public float yFollowMultiplier = .3f;
 	[HideInInspector]
 	public new Transform transform;
 	public Vector3 cameraOffset;
@@ -40,20 +42,20 @@ public class SmoothFollow : MonoBehaviour
 	{
 		if( _playerController == null )
 		{
-			transform.position = Vector3.SmoothDamp( transform.position, target.position - cameraOffset, ref _smoothDampVelocity, smoothDampTime );
+			transform.position = Vector3.SmoothDamp( transform.position, new Vector3(target.position.x - cameraOffset.x, (target.position.y * yFollowMultiplier) - cameraOffset.y, target.position.z - cameraOffset.z), ref _smoothDampVelocity, smoothDampTime);
 			return;
 		}
 		
 		if( _playerController.velocity.x > 0 )
 		{
-			transform.position = Vector3.SmoothDamp( transform.position, target.position - cameraOffset, ref _smoothDampVelocity, smoothDampTime );
-		}
-		else
+            transform.position = Vector3.SmoothDamp( transform.position, new Vector3(target.position.x - cameraOffset.x, (target.position.y * yFollowMultiplier) - cameraOffset.y, target.position.z - cameraOffset.z), ref _smoothDampVelocity, smoothDampTime);
+        }
+        else
 		{
 			var leftOffset = cameraOffset;
 			leftOffset.x *= -1;
-			transform.position = Vector3.SmoothDamp( transform.position, target.position - leftOffset, ref _smoothDampVelocity, smoothDampTime );
-		}
-	}
+            transform.position = Vector3.SmoothDamp(transform.position, new Vector3(target.position.x - leftOffset.x, (target.position.y * yFollowMultiplier) - leftOffset.y, target.position.z - leftOffset.z), ref _smoothDampVelocity, smoothDampTime);
+        }
+    }
 	
 }
