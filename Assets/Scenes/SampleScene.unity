@@ -2071,7 +2071,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 461381828, guid: 80ece1eb99011e54caf1e352c4c84bf7, type: 3}
       propertyPath: totalVerticalRays
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 461381828, guid: 80ece1eb99011e54caf1e352c4c84bf7, type: 3}
       propertyPath: _skinWidth
