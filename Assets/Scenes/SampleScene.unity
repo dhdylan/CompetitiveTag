@@ -851,25 +851,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 461381820, guid: 80ece1eb99011e54caf1e352c4c84bf7, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 880e0bebdde787741a15862717fa6b36, type: 2}
+    - target: {fileID: 2493208793922394672, guid: 80ece1eb99011e54caf1e352c4c84bf7,
+        type: 3}
+      propertyPath: m_Name
+      value: L leg
+      objectReference: {fileID: 0}
     - target: {fileID: 2709572529734522618, guid: 80ece1eb99011e54caf1e352c4c84bf7,
         type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 2709572529734522622, guid: 80ece1eb99011e54caf1e352c4c84bf7,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 60b2afe6a31493f4387018ca811f18a1, type: 2}
     - target: {fileID: 2709572529734522623, guid: 80ece1eb99011e54caf1e352c4c84bf7,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.18
       objectReference: {fileID: 0}
     - target: {fileID: 2709572529734522623, guid: 80ece1eb99011e54caf1e352c4c84bf7,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.02
+      value: 2.43
       objectReference: {fileID: 0}
     - target: {fileID: 2709572529734522623, guid: 80ece1eb99011e54caf1e352c4c84bf7,
         type: 3}
@@ -916,5 +920,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 3750090863171636812, guid: 80ece1eb99011e54caf1e352c4c84bf7,
+        type: 3}
+      propertyPath: m_Name
+      value: head
+      objectReference: {fileID: 0}
+    - target: {fileID: 3801141643061763630, guid: 80ece1eb99011e54caf1e352c4c84bf7,
+        type: 3}
+      propertyPath: m_Name
+      value: R leg
+      objectReference: {fileID: 0}
+    - target: {fileID: 6545223228318499189, guid: 80ece1eb99011e54caf1e352c4c84bf7,
+        type: 3}
+      propertyPath: m_Name
+      value: R arm
+      objectReference: {fileID: 0}
+    - target: {fileID: 7286922975913625462, guid: 80ece1eb99011e54caf1e352c4c84bf7,
+        type: 3}
+      propertyPath: m_Name
+      value: L arm
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1222955651649651152, guid: 80ece1eb99011e54caf1e352c4c84bf7, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 80ece1eb99011e54caf1e352c4c84bf7, type: 3}
