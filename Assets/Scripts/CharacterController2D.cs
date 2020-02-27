@@ -4,8 +4,6 @@ using System;
 using System.Collections.Generic;
 
 
-namespace Prime31 {
-
 [RequireComponent( typeof( BoxCollider2D ), typeof( Rigidbody2D ) )]
 public class CharacterController2D : MonoBehaviour
 {
@@ -570,5 +568,3 @@ public class CharacterController2D : MonoBehaviour
 	}
 
 	#endregion
-
-}}
