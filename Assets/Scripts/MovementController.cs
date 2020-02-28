@@ -60,7 +60,6 @@ public class MovementController : MonoBehaviour
 
     public void Move(MovementInput Input)
     {
-
         if (_controller.isGrounded)
             _velocity.y = 0;
 

@@ -447,6 +447,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4744477633014317659, guid: 96eee6fbbfca69e4c95be7cb1afd2a99,
+        type: 3}
+      propertyPath: platformMask.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 4744477633014317659, guid: 96eee6fbbfca69e4c95be7cb1afd2a99,
+        type: 3}
+      propertyPath: totalHorizontalRays
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4744477633014317659, guid: 96eee6fbbfca69e4c95be7cb1afd2a99,
+        type: 3}
+      propertyPath: totalVerticalRays
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4744477633014317659, guid: 96eee6fbbfca69e4c95be7cb1afd2a99,
+        type: 3}
+      propertyPath: _skinWidth
+      value: 0.03
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96eee6fbbfca69e4c95be7cb1afd2a99, type: 3}
 --- !u!1 &435767835
@@ -1878,6 +1898,10 @@ PrefabInstance:
     - target: {fileID: 461381828, guid: 80ece1eb99011e54caf1e352c4c84bf7, type: 3}
       propertyPath: ignoreOneWayPlatformsThisFrame
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 461381828, guid: 80ece1eb99011e54caf1e352c4c84bf7, type: 3}
+      propertyPath: platformMask.m_Bits
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 2709572529734522618, guid: 80ece1eb99011e54caf1e352c4c84bf7,
         type: 3}
