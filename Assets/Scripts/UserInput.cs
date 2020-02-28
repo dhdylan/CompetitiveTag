@@ -5,12 +5,16 @@ using UnityEngine;
 public class UserInput : MonoBehaviour
 {
     private MovementController movementController;
+    private MovementInput movementInput;
 
     void Start()
     {
+        movementInput = new MovementInput();
         movementController = GetComponent<MovementController>();
     }
     void Update()
     {
+        movementInput.GetInput();
+        movementController.Move(movementInput);
     }
 }
