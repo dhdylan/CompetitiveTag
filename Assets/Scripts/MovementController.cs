@@ -58,7 +58,7 @@ public class MovementController : MonoBehaviour
 
 	#endregion
 
-    public void Move(MovementInput Input)
+    public void Move(InputObject Input)
     {
         if (_controller.isGrounded)
             _velocity.y = 0;
@@ -110,8 +110,6 @@ public class MovementController : MonoBehaviour
 	// the Update loop contains a very simple example of moving the character around and controlling the animation
 	void Update()
 	{
-
-        Debug.Log(_velocity);
 
 		// apply horizontal speed smoothing it. dont really do this with Lerp. Use SmoothDamp or something that provides more control
 		var smoothedMovementFactor = _controller.isGrounded ? groundDamping : inAirDamping; // how fast do we change direction?
