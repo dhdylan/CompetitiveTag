@@ -92,7 +92,6 @@ public class MovementController : MonoBehaviour
         // we can only jump whilst grounded
         if (_controller.isGrounded && Input.jump == true)
         {
-            Debug.Log("jump");
             _velocity.y = Mathf.Sqrt(2f * jumpHeight * -gravity);
             //_animator.Play( Animator.StringToHash( "Jump" ) );
         }
