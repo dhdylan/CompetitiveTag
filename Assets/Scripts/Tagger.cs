@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class Tagger : MonoBehaviour
 {
-    private Player thisPlayer;
+    private PlayerManager thisPlayer;
 
     void Start()
     {
-        thisPlayer = GetComponentInParent<Player>();
+        thisPlayer = GetComponentInParent<PlayerManager>();
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.GetComponent<Player>() != null && other.gameObject.GetComponent<It>() == null) //If the player collides with a collider that is a "Player" AND isn't "It"
+        if (other.gameObject.GetComponent<PlayerManager>() != null && other.gameObject.GetComponent<It>() == null) //If the player collides with a collider that is a "Player" AND isn't "It"
         {
             Debug.Log("tag youre it");
             thisPlayer.unmakeIt();
-            other.gameObject.GetComponent<Player>().makeIt();
+            other.gameObject.GetComponent<PlayerManager>().makeIt();
         }
     }
 }

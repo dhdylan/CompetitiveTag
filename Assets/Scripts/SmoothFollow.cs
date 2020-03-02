@@ -11,12 +11,12 @@ public class SmoothFollow : MonoBehaviour
 	[HideInInspector]
 	public new Transform transform;
 	public Vector3 cameraOffset;
-	public bool useFixedUpdate = false;
+    public bool useFixedUpdate = false;
 	
 	private CharacterController2D _playerController;
 	private Vector3 _smoothDampVelocity;
 	
-	
+
 	void Awake()
 	{
 		transform = gameObject.transform;

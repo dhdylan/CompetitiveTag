@@ -1,25 +1,141 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+using Photon.Pun;
+using Photon.Realtime;
+
+namespace Com.MyCompany.MyGame
 {
-    public float matchTime = 300f;
-
-    void Start()
+    public class GameManager : MonoBehaviourPunCallbacks
     {
+        #region Public Fields
 
-    }
+        public static GameManager Instance;
+        [Tooltip("The prefab to use for representing the player")]
+        public GameObject playerPrefab;
 
-    void Update()
-    {
-        if(matchTime > 0f)
+        public float matchTime = 300f;
+
+        #endregion
+
+
+        #region Photon Callbacks
+
+
+        /// <summary>
+        /// Called when the local player left the room. We need to load the launcher scene.
+        /// </summary>
+        public override void OnLeftRoom()
         {
-            matchTime -= Time.deltaTime;
+            SceneManager.LoadScene(0); // Scene index 0 is the launcher scene
         }
-        else
+
+
+        /// <summary>
+        /// Called when another player enters the room.
+        /// Then we call 'LoadArena()', since it will automatically know which scene to load depending on the new number of players in the room.
+        /// </summary>
+        /// <param name="newPlayer"></param>
+        public override void OnPlayerEnteredRoom(Player newPlayer)
         {
-            //set a game state to stopped
+            Debug.LogFormat("OnPlayerEnteredRoom() {0}", newPlayer.NickName); // not seen if you're the player connecting)
+
+            if (PhotonNetwork.IsMasterClient)
+            {
+                Debug.LogFormat("OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
+
+            }
         }
+
+        /// <summary>
+        /// Called when another player leaves the room.
+        /// Then we call 'LoadArena()', since it will automatically know which scene to load depending on the new number of players in the room.
+        /// </summary>
+        /// <param name="otherPlayer"></param>
+        public override void OnPlayerLeftRoom(Player otherPlayer)
+        {
+            Debug.LogFormat("OnPlayerLeftRoom() {0}", otherPlayer.NickName); // seen when other disconnects
+
+
+            if (PhotonNetwork.IsMasterClient)
+            {
+                Debug.LogFormat("OnPlayerLeftRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
+
+            }
+        }
+
+
+        #endregion
+
+
+        #region MonoBehaviour Callbacks
+
+
+        void Start()
+        {
+            Instance = this;
+
+            if (playerPrefab == null)
+            {
+                Debug.LogError("<Color=Red><a>Missing</a></Color> playerPrefab Reference. Please set it up in GameObject 'Game Manager'", this);
+            }
+            else
+            {
+                if (PlayerManager.LocalPlayerInstance == null)
+                {
+                    Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
+                    // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
+                    PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(0f, 5f, 0f), Quaternion.identity, 0);
+                }
+                else
+                {
+                    Debug.LogFormat("Ignoring scene load for {0}", SceneManagerHelper.ActiveSceneName);
+                }
+            }
+        }
+
+        void Update()
+        {
+            if (matchTime > 0f)
+            {
+                matchTime -= Time.deltaTime;
+            }
+            else
+            {
+                //set a game state to stopped
+            }
+        }
+
+        #endregion
+
+
+        #region Public Methods
+
+
+        public void LeaveRoom()
+        {
+            PhotonNetwork.LeaveRoom();
+        }
+
+
+        #endregion
+
+
+        #region Private Methods
+
+        private void LoadArena()
+        {
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                Debug.LogError("PhotonNetwork: Trying to load a level but we are not the master client,");
+            }
+            Debug.LogFormat("PhotonNetwork : Loading Level : TestScene");
+            PhotonNetwork.LoadLevel("TestScene");
+        }
+
+        #endregion
     }
 }

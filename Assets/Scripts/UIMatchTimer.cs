@@ -4,19 +4,22 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class UIMatchTimer : MonoBehaviour
+namespace Com.MyCompany.MyGame
 {
-    GameManager gameManager;
-    TextMeshProUGUI tMProComponent;
-
-    void Start()
+    public class UIMatchTimer : MonoBehaviour
     {
-        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
-        tMProComponent = GetComponent<TextMeshProUGUI>();
-    }
+        GameManager gameManager;
+        TextMeshProUGUI tMProComponent;
 
-    void Update()
-    {
-        tMProComponent.SetText(Math.Round(gameManager.matchTime, 2).ToString());
+        void Start()
+        {
+            gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+            tMProComponent = GetComponent<TextMeshProUGUI>();
+        }
+
+        void Update()
+        {
+            tMProComponent.SetText(Math.Round(gameManager.matchTime, 2).ToString());
+        }
     }
 }

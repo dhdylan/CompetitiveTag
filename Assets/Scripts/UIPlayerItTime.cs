@@ -6,12 +6,11 @@ using TMPro;
 
 public class UIPlayerItTime : MonoBehaviour
 {
-    Player player;
+    PlayerManager player;
     TextMeshProUGUI tMProComponent;
 
     void Start()
     {
-        player = GameObject.Find("Player").GetComponent<Player>();
         tMProComponent = GetComponent<TextMeshProUGUI>();
     }
 
