@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-public class UserInput : MonoBehaviour
+using Photon.Pun;
+using Photon.Realtime;
+
+public class UserInput : MonoBehaviourPun, IPunObservable
 {
     private MovementController movementController;
     private TaggingController taggingController;
@@ -11,6 +14,7 @@ public class UserInput : MonoBehaviour
     [SerializeField]
     private ButtonSettings inputButtonOptions;
 
+    #region MonoBehaviour Callbacks
     void Start()
     {
         inputObject = new InputObject();
@@ -19,10 +23,30 @@ public class UserInput : MonoBehaviour
     }
     void Update()
     {
-        inputObject.GetInput(inputButtonOptions);
+        if (photonView.IsMine)
+        {
+            inputObject.GetInput(inputButtonOptions);
+        }
+
+        taggingController.taggerGameObject.SetActive(inputObject.tag); // this should be an RPC call
         movementController.Move(inputObject);
-        taggingController.taggerGameObject.SetActive(inputObject.tag); // this needs to be changed to more of an event system style
+    } 
+    #endregion
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo messageInfo)
+    {
+        if (stream.IsWriting)
+        {
+            // We own this player: send the others our data
+            stream.SendNext(inputObject);
+        }
+        else
+        {
+            // Network player, receive data
+            inputObject = (InputObject)stream.ReceiveNext();
+        }
     }
+
 }
 public class InputObject
 {

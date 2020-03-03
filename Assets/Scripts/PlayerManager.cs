@@ -8,7 +8,7 @@ using System.Collections;
 /// <summary>
 /// Player manager.
 /// </summary>
-public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
+public class PlayerManager : MonoBehaviourPunCallbacks/*, IPunObservable*/
 {
     #region Public Fields
 
@@ -28,20 +28,20 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
     #endregion
 
-    #region IpunObservable implementation
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            // We own this player: send the others our data
-        }
-        else
-        {
-            // Network player, receive data
-        }
-    }
+    //#region IpunObservable implementation
+    //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    //{
+    //    if (stream.IsWriting)
+    //    {
+    //        // We own this player: send the others our data
+    //    }
+    //    else
+    //    {
+    //        // Network player, receive data
+    //    }
+    //}
 
-    #endregion
+    //#endregion
 
     #region MonoBehaviour CallBacks
 
