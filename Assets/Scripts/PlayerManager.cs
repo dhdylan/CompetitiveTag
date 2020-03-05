@@ -48,6 +48,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks/*, IPunObservable*/
     void Start()
     {
         mainCameraPrefab = Instantiate(mainCameraPrefab);
+
     }
 
     /// <summary>

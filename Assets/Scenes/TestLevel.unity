@@ -177,6 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e21f772950304439214b726c622e24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
 --- !u!114 &39508475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -603,6 +604,7 @@ MonoBehaviour:
   playerPrefab: {fileID: 2709572529734522618, guid: 835477f83aa65f444b953c338384e967,
     type: 3}
   matchTime: 300
+  uIPlayerItTime: {fileID: 39508474}
 --- !u!4 &674386675
 Transform:
   m_ObjectHideFlags: 0

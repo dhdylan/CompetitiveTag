@@ -13,6 +13,7 @@ public class UserInput : MonoBehaviourPun, IPunObservable
     private InputObject inputObject;
     [SerializeField]
     private ButtonSettings inputButtonOptions;
+    private CharacterController2D playerCharacterController2D;
 
     #region MonoBehaviour Callbacks
     void Start()
@@ -20,6 +21,7 @@ public class UserInput : MonoBehaviourPun, IPunObservable
         inputObject = new InputObject();
         movementController = GetComponent<MovementController>();
         taggingController = GetComponent<TaggingController>();
+        playerCharacterController2D = GetComponent<CharacterController2D>();
     }
     void Update()
     {
@@ -37,13 +39,18 @@ public class UserInput : MonoBehaviourPun, IPunObservable
     {
         if (stream.IsWriting)
         {
-            // We own this player: send the others our data
-            stream.SendNext(inputObject);
+            stream.SendNext(playerCharacterController2D.transform.position);
+            stream.SendNext(playerCharacterController2D.transform.rotation);
+            stream.SendNext(playerCharacterController2D.velocity);
         }
         else
         {
-            // Network player, receive data
-            inputObject = (InputObject)stream.ReceiveNext();
+            playerCharacterController2D.transform.position = (Vector3)stream.ReceiveNext();
+            playerCharacterController2D.transform.rotation = (Quaternion)stream.ReceiveNext();
+            playerCharacterController2D.velocity = (Vector3)stream.ReceiveNext();
+
+            float lag = Mathf.Abs((float)(PhotonNetwork.Time - messageInfo.SentServerTime));
+            playerCharacterController2D.transform.position += playerCharacterController2D.velocity * lag;
         }
     }
 

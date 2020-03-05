@@ -6,7 +6,7 @@ using TMPro;
 
 public class UIPlayerItTime : MonoBehaviour
 {
-    PlayerManager player;
+    public PlayerManager player;
     TextMeshProUGUI tMProComponent;
 
     void Start()
