@@ -8,12 +8,15 @@ using Photon.Realtime;
 
 public class UserInput : MonoBehaviourPun, IPunObservable
 {
+
+
+    #region Private Fields
     private MovementController movementController;
     private TaggingController taggingController;
     private InputObject inputObject;
     [SerializeField]
-    private ButtonSettings inputButtonOptions;
-    private CharacterController2D playerCharacterController2D;
+    private ButtonSettings inputButtonOptions; 
+    #endregion
 
     #region MonoBehaviour Callbacks
     void Start()
@@ -21,40 +24,39 @@ public class UserInput : MonoBehaviourPun, IPunObservable
         inputObject = new InputObject();
         movementController = GetComponent<MovementController>();
         taggingController = GetComponent<TaggingController>();
-        playerCharacterController2D = GetComponent<CharacterController2D>();
     }
     void Update()
     {
         if (photonView.IsMine)
         {
             inputObject.GetInput(inputButtonOptions);
+            movementController.Move(inputObject.directionalInput);
+            if (inputObject.jump)
+            {
+                movementController.Jump();
+            }
+            taggingController.taggerGameObject.SetActive(inputObject.tag); // this should be an RPC call
         }
-
-        taggingController.taggerGameObject.SetActive(inputObject.tag); // this should be an RPC call
-        movementController.Move(inputObject);
-    } 
+    }
     #endregion
 
+    #region IPunObservable Implementation
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo messageInfo)
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(playerCharacterController2D.transform.position);
-            stream.SendNext(playerCharacterController2D.transform.rotation);
-            stream.SendNext(playerCharacterController2D.velocity);
+            //send
         }
         else
         {
-            playerCharacterController2D.transform.position = (Vector3)stream.ReceiveNext();
-            playerCharacterController2D.transform.rotation = (Quaternion)stream.ReceiveNext();
-            playerCharacterController2D.velocity = (Vector3)stream.ReceiveNext();
-
-            float lag = Mathf.Abs((float)(PhotonNetwork.Time - messageInfo.SentServerTime));
-            playerCharacterController2D.transform.position += playerCharacterController2D.velocity * lag;
+            //recieve
         }
-    }
+    } 
+    #endregion
 
 }
+
+
 public class InputObject
 {
     public Vector3 directionalInput;
