@@ -30,12 +30,16 @@ public class UserInput : MonoBehaviourPun, IPunObservable
         if (photonView.IsMine)
         {
             inputObject.GetInput(inputButtonOptions);
-            movementController.Move(inputObject.directionalInput);
-            if (inputObject.jump)
-            {
-                movementController.Jump();
-            }
+            
             taggingController.taggerGameObject.SetActive(inputObject.tag); // this should be an RPC call
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (photonView.IsMine)
+        {
+            movementController.Move(inputObject);
         }
     }
     #endregion
@@ -59,14 +63,15 @@ public class UserInput : MonoBehaviourPun, IPunObservable
 
 public class InputObject
 {
-    public Vector3 directionalInput;
+    public float directionalInput;
     public bool jump;
-
+    public bool crouch;
     public bool tag;
 
     public void GetInput(ButtonSettings buttonSettings)
     {
-        directionalInput = new Vector3(-Convert.ToInt16(Input.GetKey(buttonSettings.leftButton)) + Convert.ToInt16(Input.GetKey(buttonSettings.rightButton)), Convert.ToInt16(Input.GetKey(buttonSettings.downButton))); //probably dont need to do these fancy conversions
+        directionalInput = -Convert.ToInt16(Input.GetKey(buttonSettings.leftButton)) + Convert.ToInt16(Input.GetKey(buttonSettings.rightButton)); //probably dont need to do these fancy conversions
+        crouch = Input.GetKey(buttonSettings.downButton);
         jump = Input.GetKey(buttonSettings.jumpButton);
         tag = Input.GetKey(buttonSettings.tagButton);
     }
