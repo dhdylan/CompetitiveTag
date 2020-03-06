@@ -14,8 +14,6 @@ public class PhotonLagCompensationView : MonoBehaviourPun, IPunObservable
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
-        PhotonNetwork.SendRate = 40;
-        PhotonNetwork.SerializationRate = 5;
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -39,8 +37,8 @@ public class PhotonLagCompensationView : MonoBehaviourPun, IPunObservable
     {
         if (!photonView.IsMine)
         {
-            rigidBody.position = new Vector2(Mathf.Lerp(rigidBody.position.x, networkedPosition.x, interpolateRate), Mathf.Lerp(rigidBody.position.y, networkedPosition.y, interpolateRate));
-            //rigidBody.velocity = networkedVelocity;
+            rigidBody.position = Vector2.Lerp(rigidBody.position, networkedPosition, Time.fixedDeltaTime * interpolateRate);
+            rigidBody.velocity = networkedVelocity;
         }
     }
 }
