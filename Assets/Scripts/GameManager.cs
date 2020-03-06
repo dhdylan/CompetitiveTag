@@ -90,7 +90,7 @@ namespace Com.MyCompany.MyGame
             }
             else
             {
-                if (PlayerManager.LocalPlayerInstance == null)
+                if (PlayerManager.LocalPlayerInstance == null) //if there is no local player for this client's instance of the game
                 {
                     Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
                     // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate

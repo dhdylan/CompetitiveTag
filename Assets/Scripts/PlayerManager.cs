@@ -61,7 +61,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks/*, IPunObservable*/
         if (photonView.IsMine)
         {
             PlayerManager.LocalPlayerInstance = this.gameObject;
-            mainCameraPrefab.GetComponent<SmoothFollow>().target = this.gameObject.transform;
+            //mainCameraPrefab.GetComponent<SmoothFollow>().target = this.gameObject.transform;
 
         }
     }

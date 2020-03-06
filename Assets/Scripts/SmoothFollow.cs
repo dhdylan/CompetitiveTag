@@ -21,40 +21,21 @@ public class SmoothFollow : MonoBehaviour
 	{
 		transform = gameObject.transform;
 	}
-	
-	
-	void LateUpdate()
-	{
-		//if( !useFixedUpdate )
-		//	updateCameraPosition();
-	}
-
 
 	void FixedUpdate()
 	{
-		//if( useFixedUpdate )
-		//	updateCameraPosition();
-	}
+        if (useFixedUpdate)
+            updateCameraPosition();
+    }
 
 
-	//void updateCameraPosition()
-	//{
-	//	if( target == null )
-	//	{
-	//		transform.position = Vector3.SmoothDamp( transform.position, new Vector3(target.position.x - cameraOffset.x, (target.position.y * yFollowMultiplier) - cameraOffset.y, target.position.z - cameraOffset.z), ref _smoothDampVelocity, smoothDampTime);
-	//		return;
-	//	}
-		
-	//	if( target.velocity.x > 0 )
-	//	{
- //           transform.position = Vector3.SmoothDamp( transform.position, new Vector3(target.position.x - cameraOffset.x, (target.position.y * yFollowMultiplier) - cameraOffset.y, target.position.z - cameraOffset.z), ref _smoothDampVelocity, smoothDampTime);
- //       }
- //       else
-	//	{
-	//		var leftOffset = cameraOffset;
-	//		leftOffset.x *= -1;
- //           transform.position = Vector3.SmoothDamp(transform.position, new Vector3(target.position.x - leftOffset.x, (target.position.y * yFollowMultiplier) - leftOffset.y, target.position.z - leftOffset.z), ref _smoothDampVelocity, smoothDampTime);
- //       }
- //   }
-	
+    void updateCameraPosition()
+    {
+        if (target == null)
+        {
+            transform.position = Vector3.SmoothDamp(transform.position, new Vector3(target.position.x - cameraOffset.x, (target.position.y * yFollowMultiplier) - cameraOffset.y, target.position.z - cameraOffset.z), ref _smoothDampVelocity, smoothDampTime);
+            return;
+        }
+    }
+
 }
