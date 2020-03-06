@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.UI;
 
 
 public class Launcher : MonoBehaviourPunCallbacks
@@ -23,6 +24,10 @@ public class Launcher : MonoBehaviourPunCallbacks
     [Tooltip("The UI Label to inform the user that the connection is in progress")]
     [SerializeField]
     private GameObject progressLabel;
+
+    [SerializeField]
+    private GameObject roomNameInputFieldObject;
+    private InputField roomNameInputField;
 
     #endregion
 
@@ -67,6 +72,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         controlPanel.SetActive(true);
         progressLabel.SetActive(false);
+        roomNameInputField = roomNameInputFieldObject.GetComponent<InputField>();
     }
 
 
@@ -103,7 +109,7 @@ public class Launcher : MonoBehaviourPunCallbacks
         if (isConnecting)
         {
             // #Critical: The first thing we try to do is to join a potential existing room. If there is, good, else, we'll be called back with OnJoinRandomFailed()
-            PhotonNetwork.JoinRandomRoom();
+            PhotonNetwork.JoinOrCreateRoom(roomNameInputField.text, new RoomOptions { MaxPlayers = maxPlayersPerRoom }, TypedLobby.Default);
             isConnecting = false;
         }
     }
@@ -130,11 +136,10 @@ public class Launcher : MonoBehaviourPunCallbacks
         // #Critical: We only load if we are the first player, else we rely on "PhotoNetwork.AutomaticallySyncScene" to sync our instance scene.
         if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
         {
-            Debug.Log("We load the 'TestLevel' scene");
 
             // #Critical
             // Load the Room Level.
-            PhotonNetwork.LoadLevel("TestLevel");
+            PhotonNetwork.LoadLevel("Pre Game");
         }
     }
 
