@@ -9,10 +9,14 @@ using UnityEngine.UI;
 public class PreGameManager : MonoBehaviourPunCallbacks
 {
     #region Private Serialized Fields
+    
     [SerializeField]
     private PlayersInRoomUI playersInRoomUI;
     [SerializeField]
     private Text roomNameText;
+    [SerializeField]
+    private int numberOfReadyPlayers = 0;
+
     #endregion
 
 
@@ -65,6 +69,21 @@ public class PreGameManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
     }
 
+    public void AddReadyPlayer()
+    {
+        Debug.Log("addedReadyPlayer");
+        numberOfReadyPlayers = numberOfReadyPlayers + 1;
+        checkIfAllPlayersReady();
+    }
+
+    public void SubtractReadyPlayer()
+    {
+        numberOfReadyPlayers = numberOfReadyPlayers - 1;
+        checkIfAllPlayersReady();
+        Debug.Log("addedReadyPlayer");
+
+    }
+
     #endregion
 
 
@@ -76,6 +95,18 @@ public class PreGameManager : MonoBehaviourPunCallbacks
         foreach(Player player in PhotonNetwork.CurrentRoom.Players.Values)
         {
             playersInRoom.Add(player);
+        }
+    }
+
+    private void checkIfAllPlayersReady()
+    {
+        if(numberOfReadyPlayers == PhotonNetwork.CurrentRoom.PlayerCount)
+        {
+            Debug.Log("countdown begin");
+        }
+        else
+        {
+            Debug.Log("Waiting on more players to ready");
         }
     }
 

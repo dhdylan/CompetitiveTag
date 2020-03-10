@@ -15,6 +15,22 @@ public class PlayersInRoomUI : MonoBehaviour
     private GameObject playerListingPrefab;
     [SerializeField]
     private RectTransform verticalLayoutGroupTransform;
+    [SerializeField]
+    private PreGameManager preGameManager;
+
+    #endregion
+
+
+    #region Public Fields
+
+    public GameObject localPlayerListing;
+
+    #endregion
+
+
+    #region MonoBheaviour Callbacks
+
+
 
     #endregion
 
@@ -26,6 +42,22 @@ public class PlayersInRoomUI : MonoBehaviour
         clearPlayerListings();
 
         populatePlayerListings(playersInRoom);
+    }
+
+    public void ToggleLocalPlayerReady()
+    {
+        if (localPlayerListing.transform.Find("Ready").Find("Image").GetComponent<Image>().color != Color.green)
+        {
+            preGameManager.AddReadyPlayer();
+            localPlayerListing.transform.Find("Ready").Find("Image").GetComponent<Image>().color = Color.green;
+            localPlayerListing.transform.Find("Ready").Find("Image").Find("Text").GetComponent<Text>().text = "Unready";
+        }
+        else
+        {
+            preGameManager.SubtractReadyPlayer();
+            localPlayerListing.transform.Find("Ready").Find("Image").GetComponent<Image>().color = Color.red;
+            localPlayerListing.transform.Find("Ready").Find("Image").Find("Text").GetComponent<Text>().text = "Ready";
+        }
     }
 
     #endregion
@@ -47,6 +79,10 @@ public class PlayersInRoomUI : MonoBehaviour
         foreach (Player player in playersInRoom)
         {
             GameObject playerListing = Instantiate(playerListingPrefab, verticalLayoutGroupTransform);
+            if (player.IsLocal)
+            {
+                localPlayerListing = playerListing;
+            }
             playerListings.Add(playerListing);
             playerListing.transform.Find("Info Container").Find("Username").GetComponent<Text>().text = player.NickName;
             playerListing.transform.Find("Info Container").Find("Is Master Client").GetComponent<Text>().text = player.IsMasterClient.ToString();
