@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class PlayersInRoomUI : MonoBehaviour
 {
+    #region Private Serialized Fields
+
     [SerializeField]
     private List<GameObject> playerListings = new List<GameObject>();
     [SerializeField]
@@ -14,35 +16,44 @@ public class PlayersInRoomUI : MonoBehaviour
     [SerializeField]
     private RectTransform verticalLayoutGroupTransform;
 
+    #endregion
 
-    public void UpdateUI(Dictionary<int, Player> playersInRoom)
+
+    #region Public Functions
+
+    public void UpdateUI(List<Player> playersInRoom)
     {
         clearPlayerListings();
 
         populatePlayerListings(playersInRoom);
     }
 
+    #endregion
+
+
+    #region Private Functions
+
     private void clearPlayerListings()
     {
         foreach (GameObject listing in playerListings)
         {
-            PhotonNetwork.Destroy(listing);
+            Destroy(listing);
         }
         playerListings.Clear();
     }
 
-    private void populatePlayerListings(Dictionary<int, Player> playersInRoom)
+    private void populatePlayerListings(List<Player> playersInRoom)
     {
-        foreach (Player player in playersInRoom.Values)
+        foreach (Player player in playersInRoom)
         {
             GameObject playerListing = Instantiate(playerListingPrefab, verticalLayoutGroupTransform);
             playerListings.Add(playerListing);
-            playerListing.transform.Find("Username").GetComponent<Text>().text = player.NickName;
-            playerListing.transform.Find("Is Master Client").GetComponent<Text>().text = player.IsMasterClient.ToString();
-            playerListing.transform.Find("Is Local").GetComponent<Text>().text = player.IsLocal.ToString();
-            playerListing.transform.Find("Actor ID").GetComponent<Text>().text = player.ActorNumber.ToString();
+            playerListing.transform.Find("Info Container").Find("Username").GetComponent<Text>().text = player.NickName;
+            playerListing.transform.Find("Info Container").Find("Is Master Client").GetComponent<Text>().text = player.IsMasterClient.ToString();
+            playerListing.transform.Find("Info Container").Find("Is Local").GetComponent<Text>().text = player.IsLocal.ToString();
+            playerListing.transform.Find("Info Container").Find("Actor ID").GetComponent<Text>().text = player.ActorNumber.ToString();
         }
     }
 
-
+    #endregion
 }

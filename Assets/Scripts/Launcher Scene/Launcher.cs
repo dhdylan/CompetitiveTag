@@ -25,8 +25,8 @@ public class Launcher : MonoBehaviourPunCallbacks
     [SerializeField]
     private GameObject progressLabel;
 
+    [Tooltip("Reference to the Room Name Input Field Object")]
     [SerializeField]
-    private GameObject roomNameInputFieldObject;
     private InputField roomNameInputField;
 
     #endregion
@@ -72,14 +72,13 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         controlPanel.SetActive(true);
         progressLabel.SetActive(false);
-        roomNameInputField = roomNameInputFieldObject.GetComponent<InputField>();
     }
 
 
     #endregion
 
 
-    #region Public Methods
+    #region Public Functions
 
 
     /// <summary>
@@ -89,8 +88,15 @@ public class Launcher : MonoBehaviourPunCallbacks
     /// </summary>
     public void Connect()
     {
-        PhotonNetwork.GameVersion = gameVersion;
-        isConnecting = PhotonNetwork.ConnectUsingSettings();
+        if (!PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.GameVersion = gameVersion;
+            isConnecting = PhotonNetwork.ConnectUsingSettings();
+        } 
+        else if (PhotonNetwork.IsConnectedAndReady)
+        {
+            PhotonNetwork.JoinOrCreateRoom(roomNameInputField.text, new RoomOptions { MaxPlayers = maxPlayersPerRoom }, TypedLobby.Default);
+        }
 
         progressLabel.SetActive(true);
         controlPanel.SetActive(false);
