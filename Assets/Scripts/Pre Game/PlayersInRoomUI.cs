@@ -28,13 +28,6 @@ public class PlayersInRoomUI : MonoBehaviour
     #endregion
 
 
-    #region MonoBheaviour Callbacks
-
-
-
-    #endregion
-
-
     #region Public Functions
 
     public void UpdateUI(List<Player> playersInRoom)
@@ -44,17 +37,18 @@ public class PlayersInRoomUI : MonoBehaviour
         populatePlayerListings(playersInRoom);
     }
 
-    public void ToggleLocalPlayerReady()
+    public void ToggleLocalPlayerReady() // Called when the "Ready" button is pressed.
     {
+        PhotonView preGameManagerPhotonView = preGameManager.transform.GetComponent<PhotonView>();
         if (localPlayerListing.transform.Find("Ready").Find("Image").GetComponent<Image>().color != Color.green)
         {
-            preGameManager.AddReadyPlayer();
+            preGameManagerPhotonView.RPC("AddReadyPlayer", RpcTarget.AllBuffered);
             localPlayerListing.transform.Find("Ready").Find("Image").GetComponent<Image>().color = Color.green;
             localPlayerListing.transform.Find("Ready").Find("Image").Find("Text").GetComponent<Text>().text = "Unready";
         }
         else
         {
-            preGameManager.SubtractReadyPlayer();
+            preGameManagerPhotonView.RPC("SubtractReadyPlayer", RpcTarget.AllBuffered);
             localPlayerListing.transform.Find("Ready").Find("Image").GetComponent<Image>().color = Color.red;
             localPlayerListing.transform.Find("Ready").Find("Image").Find("Text").GetComponent<Text>().text = "Ready";
         }

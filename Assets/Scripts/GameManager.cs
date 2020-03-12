@@ -42,7 +42,6 @@ namespace Com.MyCompany.MyGame
 
         /// <summary>
         /// Called when another player enters the room.
-        /// Then we call 'LoadArena()', since it will automatically know which scene to load depending on the new number of players in the room.
         /// </summary>
         /// <param name="newPlayer"></param>
         public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -58,8 +57,7 @@ namespace Com.MyCompany.MyGame
 
         /// <summary>
         /// Called when another player leaves the room.
-        /// Then we call 'LoadArena()', since it will automatically know which scene to load depending on the new number of players in the room.
-        /// </summary>
+        /// /// </summary>
         /// <param name="otherPlayer"></param>
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {

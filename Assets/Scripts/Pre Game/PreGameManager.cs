@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
@@ -14,15 +15,13 @@ public class PreGameManager : MonoBehaviourPunCallbacks
     private PlayersInRoomUI playersInRoomUI;
     [SerializeField]
     private Text roomNameText;
-    [SerializeField]
-    private int numberOfReadyPlayers = 0;
 
     #endregion
 
 
     #region Private Fields
 
-    private List<Player> playersInRoom = new List<Player>();
+    private List<PlayerListingData> playerListingDatas = new List<PlayerListingData>();
 
     #endregion
 
@@ -31,9 +30,9 @@ public class PreGameManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        getPlayersInRoom();
-        playersInRoomUI.UpdateUI(playersInRoom);
         roomNameText.text = "Room: " + PhotonNetwork.CurrentRoom.Name;
+
+        addPlayerListingData(PhotonNetwork.LocalPlayer); // this should be adding the first (and currently the only) player in the room as the master
     }
 
     #endregion
@@ -43,12 +42,12 @@ public class PreGameManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        playersInRoomUI.UpdateUI(playersInRoom);
+        addPlayerListingData(newPlayer);
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        playersInRoomUI.UpdateUI(playersInRoom);
+        removePlayerListingData(otherPlayer);
     }
 
     /// <summary>
@@ -69,19 +68,17 @@ public class PreGameManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
     }
 
-    public void AddReadyPlayer()
+    public void loadMatch()
     {
-        Debug.Log("addedReadyPlayer");
-        numberOfReadyPlayers = numberOfReadyPlayers + 1;
-        checkIfAllPlayersReady();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("TestLevel");
+        }
     }
 
-    public void SubtractReadyPlayer()
+    public void OnReadyButtonClicked()
     {
-        numberOfReadyPlayers = numberOfReadyPlayers - 1;
-        checkIfAllPlayersReady();
-        Debug.Log("addedReadyPlayer");
-
+        togglePlayerListingDataReady(playerListingDatas.Find(playerListingData => playerListingData.player == PhotonNetwork.LocalPlayer));
     }
 
     #endregion
@@ -89,26 +86,67 @@ public class PreGameManager : MonoBehaviourPunCallbacks
 
     #region Private Functions
 
-    private void getPlayersInRoom()
+    private void addPlayerListingData(Player newPlayer)
     {
-        playersInRoom.Clear();
-        foreach(Player player in PhotonNetwork.CurrentRoom.Players.Values)
-        {
-            playersInRoom.Add(player);
-        }
+        playerListingDatas.Add(new PlayerListingData(newPlayer, playerListingDatas.Count));
+        debug_PrintPlayerListingsDatas();
     }
 
-    private void checkIfAllPlayersReady()
+    private void removePlayerListingData(Player playerToDelete)
     {
-        if(numberOfReadyPlayers == PhotonNetwork.CurrentRoom.PlayerCount)
+        playerListingDatas.RemoveAt(playerListingDatas.FindIndex(playerListingData => playerListingData.player == playerToDelete));
+        debug_PrintPlayerListingsDatas();
+    }
+
+    private bool allPlayersReady()
+    {
+        foreach (PlayerListingData playerListingData in playerListingDatas)
         {
-            Debug.Log("countdown begin");
+            if (!playerListingData.ready)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void togglePlayerListingDataReady(PlayerListingData playerListingData)
+    {
+        if(playerListingData.ready){
+            playerListingData.ready = false;
         }
         else
         {
-            Debug.Log("Waiting on more players to ready");
+            playerListingData.ready = true;
+        }
+
+        Debug.Log("============ All Players Ready : " + allPlayersReady() + "==================");
+    }
+
+
+    private void debug_PrintPlayerListingsDatas()
+    {
+        Debug.Log("=====================Player Listing Datas=================");
+        foreach(PlayerListingData playerListingData in playerListingDatas)
+        {
+            Debug.Log("Username: " + playerListingData.player.NickName);
+            Debug.Log("Ready: " + playerListingData.ready);
+            Debug.Log("UISlot: " + playerListingData.UISlot);
         }
     }
 
     #endregion
+}
+
+public class PlayerListingData
+{
+    public Player player;
+    public bool ready = false;
+    public int UISlot;
+
+    public PlayerListingData(Player player, int UISlot)
+    {
+        this.player = player;
+        this.UISlot = UISlot;
+    }
 }
