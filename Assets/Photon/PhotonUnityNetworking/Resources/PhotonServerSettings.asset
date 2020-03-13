@@ -36,5 +36,8 @@ MonoBehaviour:
   - RespawnSpaceship
   - AddReadyPlayer
   - SubtractReadyPlayer
+  - addPlayerListingData
+  - removePlayerListingData
+  - togglePlayerListingDataReady
   DisableAutoOpenWizard: 1
   ShowSettings: 1

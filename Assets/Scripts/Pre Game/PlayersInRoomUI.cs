@@ -21,37 +21,12 @@ public class PlayersInRoomUI : MonoBehaviour
     #endregion
 
 
-    #region Public Fields
-
-    public GameObject localPlayerListing;
-
-    #endregion
-
-
     #region Public Functions
 
-    public void UpdateUI(List<Player> playersInRoom)
+    public void UpdateUI(List<PlayerListingData> playerListingDatas)
     {
         clearPlayerListings();
-
-        populatePlayerListings(playersInRoom);
-    }
-
-    public void ToggleLocalPlayerReady() // Called when the "Ready" button is pressed.
-    {
-        PhotonView preGameManagerPhotonView = preGameManager.transform.GetComponent<PhotonView>();
-        if (localPlayerListing.transform.Find("Ready").Find("Image").GetComponent<Image>().color != Color.green)
-        {
-            preGameManagerPhotonView.RPC("AddReadyPlayer", RpcTarget.AllBuffered);
-            localPlayerListing.transform.Find("Ready").Find("Image").GetComponent<Image>().color = Color.green;
-            localPlayerListing.transform.Find("Ready").Find("Image").Find("Text").GetComponent<Text>().text = "Unready";
-        }
-        else
-        {
-            preGameManagerPhotonView.RPC("SubtractReadyPlayer", RpcTarget.AllBuffered);
-            localPlayerListing.transform.Find("Ready").Find("Image").GetComponent<Image>().color = Color.red;
-            localPlayerListing.transform.Find("Ready").Find("Image").Find("Text").GetComponent<Text>().text = "Ready";
-        }
+        drawPlayerListings(playerListingDatas);
     }
 
     #endregion
@@ -68,20 +43,26 @@ public class PlayersInRoomUI : MonoBehaviour
         playerListings.Clear();
     }
 
-    private void populatePlayerListings(List<Player> playersInRoom)
+    private void drawPlayerListings(List<PlayerListingData> playerListingDatas)
     {
-        foreach (Player player in playersInRoom)
+        foreach (PlayerListingData playerListingData in playerListingDatas)
         {
             GameObject playerListing = Instantiate(playerListingPrefab, verticalLayoutGroupTransform);
-            if (player.IsLocal)
-            {
-                localPlayerListing = playerListing;
-            }
             playerListings.Add(playerListing);
-            playerListing.transform.Find("Info Container").Find("Username").GetComponent<Text>().text = player.NickName;
-            playerListing.transform.Find("Info Container").Find("Is Master Client").GetComponent<Text>().text = player.IsMasterClient.ToString();
-            playerListing.transform.Find("Info Container").Find("Is Local").GetComponent<Text>().text = player.IsLocal.ToString();
-            playerListing.transform.Find("Info Container").Find("Actor ID").GetComponent<Text>().text = player.ActorNumber.ToString();
+            if (playerListingData.ready)
+            {
+                playerListing.transform.Find("Ready").GetComponentInChildren<Image>().color = Color.green;
+            }
+            else
+            {
+                playerListing.transform.Find("Ready").GetComponentInChildren<Image>().color = Color.red;
+            }
+            playerListing.transform.Find("Info Container").Find("Username").GetComponent<Text>().text = playerListingData.player.NickName;
+
+
+            //playerListing.transform.Find("Info Container").Find("Is Master Client").GetComponent<Text>().text = player.IsMasterClient.ToString();
+            //playerListing.transform.Find("Info Container").Find("Is Local").GetComponent<Text>().text = player.IsLocal.ToString();
+            //playerListing.transform.Find("Info Container").Find("Actor ID").GetComponent<Text>().text = player.ActorNumber.ToString();
         }
     }
 

@@ -31,8 +31,10 @@ public class PreGameManager : MonoBehaviourPunCallbacks
     void Start()
     {
         roomNameText.text = "Room: " + PhotonNetwork.CurrentRoom.Name;
-
-        addPlayerListingData(PhotonNetwork.LocalPlayer); // this should be adding the first (and currently the only) player in the room as the master
+        if(PhotonNetwork.CurrentRoom.PlayerCount == 1) {
+            Debug.Log("'addPlayerListingData' is being called from Start");
+            photonView.RPC("addPlayerListingData", RpcTarget.AllBuffered, PhotonNetwork.LocalPlayer);
+        }
     }
 
     #endregion
@@ -42,12 +44,20 @@ public class PreGameManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        addPlayerListingData(newPlayer);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Debug.Log("'addPlayerListingData' is being called from OnPlayerEnteredRoom");
+            photonView.RPC("addPlayerListingData", RpcTarget.AllBuffered, newPlayer);
+        }
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        removePlayerListingData(otherPlayer);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Debug.Log("'removePlayerListingData' is being called from OnPlayerLeftRoom");
+            photonView.RPC("removePlayerListingData", RpcTarget.AllBuffered, otherPlayer);
+        }
     }
 
     /// <summary>
@@ -55,6 +65,8 @@ public class PreGameManager : MonoBehaviourPunCallbacks
     /// </summary>
     public override void OnLeftRoom()
     {
+        Debug.Log("'removePlayerListingData' is being called from OnLeftRoom");
+        photonView.RPC("removePlayerListingData", RpcTarget.AllBuffered, PhotonNetwork.LocalPlayer);
         SceneManager.LoadScene(0); // Scene index 0 is the launcher scene
     }
 
@@ -78,7 +90,7 @@ public class PreGameManager : MonoBehaviourPunCallbacks
 
     public void OnReadyButtonClicked()
     {
-        togglePlayerListingDataReady(playerListingDatas.Find(playerListingData => playerListingData.player == PhotonNetwork.LocalPlayer));
+        photonView.RPC("togglePlayerListingDataReady", RpcTarget.AllBuffered, PhotonNetwork.LocalPlayer);
     }
 
     #endregion
@@ -86,16 +98,46 @@ public class PreGameManager : MonoBehaviourPunCallbacks
 
     #region Private Functions
 
+    [PunRPC]
     private void addPlayerListingData(Player newPlayer)
     {
         playerListingDatas.Add(new PlayerListingData(newPlayer, playerListingDatas.Count));
+        playersInRoomUI.UpdateUI(playerListingDatas);
         debug_PrintPlayerListingsDatas();
     }
 
+    [PunRPC]
     private void removePlayerListingData(Player playerToDelete)
     {
-        playerListingDatas.RemoveAt(playerListingDatas.FindIndex(playerListingData => playerListingData.player == playerToDelete));
+        playerListingDatas.Remove(getPlayerListingDataByPlayer(playerToDelete));
+        playersInRoomUI.UpdateUI(playerListingDatas);
         debug_PrintPlayerListingsDatas();
+    }
+
+    [PunRPC]
+    private void togglePlayerListingDataReady(Player playertoReady)
+    {
+        PlayerListingData playerListingData = getPlayerListingDataByPlayer(playertoReady);
+        if (playerListingData.ready)
+        {
+            playerListingData.ready = false;
+        }
+        else
+        {
+            playerListingData.ready = true;
+        }
+
+        playersInRoomUI.UpdateUI(playerListingDatas);
+
+        debug_PrintPlayerListingsDatas();
+        Debug.Log("============ All Players Ready : " + allPlayersReady() + "==================");
+
+        if (allPlayersReady())
+        {
+            Debug.Log("All players ready. Starting match.");
+            loadMatch();
+        }
+
     }
 
     private bool allPlayersReady()
@@ -110,28 +152,26 @@ public class PreGameManager : MonoBehaviourPunCallbacks
         return true;
     }
 
-    private void togglePlayerListingDataReady(PlayerListingData playerListingData)
+    #endregion
+
+
+    #region Utility
+
+    private PlayerListingData getPlayerListingDataByPlayer(Player player)
     {
-        if(playerListingData.ready){
-            playerListingData.ready = false;
-        }
-        else
-        {
-            playerListingData.ready = true;
-        }
+        return playerListingDatas.Find(playerListingData => playerListingData.player == player);
 
-        Debug.Log("============ All Players Ready : " + allPlayersReady() + "==================");
     }
-
 
     private void debug_PrintPlayerListingsDatas()
     {
         Debug.Log("=====================Player Listing Datas=================");
-        foreach(PlayerListingData playerListingData in playerListingDatas)
+        foreach (PlayerListingData playerListingData in playerListingDatas)
         {
             Debug.Log("Username: " + playerListingData.player.NickName);
             Debug.Log("Ready: " + playerListingData.ready);
             Debug.Log("UISlot: " + playerListingData.UISlot);
+            Debug.Log("===");
         }
     }
 
