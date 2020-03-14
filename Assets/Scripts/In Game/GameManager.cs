@@ -99,8 +99,6 @@ namespace Com.MyCompany.MyGame
                     Debug.LogFormat("Ignoring scene load for {0}", SceneManagerHelper.ActiveSceneName);
                 }
             }
-
-            uIPlayerItTime.player = PlayerManager.LocalPlayerInstance.GetComponent<PlayerManager>();
         }
 
         void Update()
