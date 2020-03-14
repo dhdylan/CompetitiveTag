@@ -9,29 +9,30 @@ using Photon.Realtime;
 public class UserInput : MonoBehaviourPun, IPunObservable
 {
 
-
     #region Private Fields
     private MovementController movementController;
-    private TaggingController taggingController;
+    private CombatController combatController;
     private InputObject inputObject;
+
     [SerializeField]
     private ButtonSettings inputButtonOptions; 
     #endregion
+
 
     #region MonoBehaviour Callbacks
     void Start()
     {
         inputObject = new InputObject();
         movementController = GetComponent<MovementController>();
-        taggingController = GetComponent<TaggingController>();
+        combatController = GetComponent<CombatController>();
     }
     void Update()
     {
         if (photonView.IsMine)
         {
             inputObject.GetInput(inputButtonOptions);
-            
-            taggingController.taggerGameObject.SetActive(inputObject.tag); // this should be an RPC call
+
+            combatController.taggerGameObject.SetActive(inputObject.tag);
         }
     }
 
@@ -40,22 +41,38 @@ public class UserInput : MonoBehaviourPun, IPunObservable
         if (photonView.IsMine)
         {
             movementController.Move(inputObject);
+
+            //
         }
     }
     #endregion
 
-    #region IPunObservable Implementation
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo messageInfo)
+
+    #region IObservable Implementation
+
+    public void OnPhotonSerializeView (PhotonStream stream, PhotonMessageInfo messageInfo)
     {
-        if (stream.IsWriting)
+        if (stream.IsWriting) //send data
         {
-            //send
+            stream.SendNext(inputObject.tag);
         }
-        else
+        else //recieve data
         {
-            //recieve
+            inputObject.tag = (bool)stream.ReceiveNext();
         }
-    } 
+    }
+
+    #endregion
+
+
+    #region Private Functions
+
+    [PunRPC]
+    private void setObjectActive(GameObject activateObject, bool active)
+    {
+        activateObject.SetActive(active);
+    }
+
     #endregion
 
 }
@@ -67,6 +84,7 @@ public class InputObject
     public bool jump;
     public bool crouch;
     public bool tag;
+    public bool ability;
 
     public void GetInput(ButtonSettings buttonSettings)
     {
@@ -74,5 +92,6 @@ public class InputObject
         crouch = Input.GetKey(buttonSettings.downButton);
         jump = Input.GetKey(buttonSettings.jumpButton);
         tag = Input.GetKey(buttonSettings.tagButton);
+        ability = Input.GetKeyDown(buttonSettings.abilityButton);
     }
 }

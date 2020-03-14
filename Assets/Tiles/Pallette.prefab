@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4535345025290482305}
   - component: {fileID: 1993915272912503259}
   m_Layer: 31
-  m_Name: New Palette
+  m_Name: Pallette
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -94,6 +94,15 @@ Tilemap:
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       m_AllTileFlags: 1073741825
+  - first: {x: -1, y: -1, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 4
+      m_TileSpriteIndex: 4
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      m_AllTileFlags: 1073741825
   - first: {x: -2, y: 0, z: 0}
     second:
       serializedVersion: 2
@@ -128,9 +137,11 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 44993010a7fc9144687c3908a81d2359, type: 2}
   - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: 607856e882c7df84fa037e657d84c39e, type: 2}
+    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 08b8ef9a9375be54980efc9f7cbb4f77, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 607856e882c7df84fa037e657d84c39e, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 8c18a073336bccd4f89d644849a604f0, type: 3}
@@ -140,8 +151,10 @@ Tilemap:
     m_Data: {fileID: 21300000, guid: adf3e00f22107b34a826a9cf07352ffe, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 70f04f439881d804e959b7c5c0ac008f, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 21300000, guid: 0c79f3bf5a366c44e95421a627cfa0fb, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 4
+  - m_RefCount: 5
     m_Data:
       e00: 1
       e01: 0
@@ -160,7 +173,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 4
+  - m_RefCount: 5
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1

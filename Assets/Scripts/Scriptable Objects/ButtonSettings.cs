@@ -9,6 +9,8 @@ public class ButtonSettings : ScriptableObject
     public KeyCode rightButton;
     public KeyCode upButton;
     public KeyCode downButton;
+
     public KeyCode jumpButton;
     public KeyCode tagButton;
+    public KeyCode abilityButton;
 }

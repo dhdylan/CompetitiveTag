@@ -39,5 +39,6 @@ MonoBehaviour:
   - addPlayerListingData
   - removePlayerListingData
   - togglePlayerListingDataReady
+  - setObjectActive
   DisableAutoOpenWizard: 1
   ShowSettings: 1
