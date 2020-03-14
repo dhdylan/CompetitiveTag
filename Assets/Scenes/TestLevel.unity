@@ -1097,6 +1097,7 @@ GameObject:
   - component: {fileID: 1773302240}
   - component: {fileID: 1773302239}
   - component: {fileID: 1773302238}
+  - component: {fileID: 1773302241}
   m_Layer: 8
   m_Name: Lava
   m_TagString: Untagged
@@ -1440,6 +1441,19 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1773302241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1773302236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 025a40279d4d61c49b217e28e1648f5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upwardForce: 100
 --- !u!1001 &1795912745
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1527,7 +1541,8 @@ PrefabInstance:
       propertyPath: m_RendererIndex
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8808519340867012935, guid: 155fd77fcc1be3c49b0deabcad090b18, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 155fd77fcc1be3c49b0deabcad090b18, type: 3}
 --- !u!4 &1803659435 stripped
 Transform:
