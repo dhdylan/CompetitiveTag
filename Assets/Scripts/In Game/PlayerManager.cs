@@ -18,6 +18,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks/*, IPunObservable*/
 
     #endregion
 
+
     #region Serialized Private Fields
 
     [SerializeField]
@@ -28,28 +29,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks/*, IPunObservable*/
 
     #endregion
 
-    //#region IpunObservable implementation
-    //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    //{
-    //    if (stream.IsWriting)
-    //    {
-    //        // We own this player: send the others our data
-    //    }
-    //    else
-    //    {
-    //        // Network player, receive data
-    //    }
-    //}
-
-    //#endregion
 
     #region MonoBehaviour CallBacks
-
-    void Start()
-    {
-        mainCameraPrefab = Instantiate(mainCameraPrefab);
-
-    }
 
     /// <summary>
     /// MonoBehaviour method called on GameObject by Unity during early initialization phase.
@@ -58,14 +39,15 @@ public class PlayerManager : MonoBehaviourPunCallbacks/*, IPunObservable*/
     {
         // #Important
         // used in GameManager.cs: we keep track of the localPlayer instance to prevent instantiation when levels are synchronized
-        if (photonView.IsMine)
+        if (photonView.IsMine || !PhotonNetwork.IsConnectedAndReady)
         {
             PlayerManager.LocalPlayerInstance = this.gameObject;
-            //mainCameraPrefab.GetComponent<SmoothFollow>().target = this.gameObject.transform;
-
+            GameObject.Find("Main Camera").GetComponent<CameraFollow>().SetLocalPlayer(this.gameObject);
         }
     }
+
     #endregion
+
 
     #region Public Methods
 
