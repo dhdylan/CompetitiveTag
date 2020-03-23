@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class CombatController : MonoBehaviour
+using Photon.Pun;
+public class CombatController : MonoBehaviourPun
 {
-    public GameObject taggerGameObject;
+
+    void Start()
+    {
+    }
 }

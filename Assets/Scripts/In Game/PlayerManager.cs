@@ -15,26 +15,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks/*, IPunObservable*/
     [Tooltip("The local player instance. Use this to know if the local player is represented in the Scene")]
     public static GameObject LocalPlayerInstance;
 
-
-    #endregion
-
-
-    #region Serialized Private Fields
-
-    [SerializeField]
-    private double _totalItTime = 0;
-
-    [SerializeField]
-    private GameObject mainCameraPrefab;
-
     #endregion
 
 
     #region MonoBehaviour CallBacks
 
-    /// <summary>
-    /// MonoBehaviour method called on GameObject by Unity during early initialization phase.
-    /// </summary>
     void Awake()
     {
         // #Important
@@ -44,32 +29,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks/*, IPunObservable*/
             PlayerManager.LocalPlayerInstance = this.gameObject;
             GameObject.Find("Main Camera").GetComponent<CameraFollow>().SetLocalPlayer(this.gameObject);
         }
-    }
-
-    #endregion
-
-
-    #region Public Methods
-
-    public double totalItTime
-    {
-        get
-        {
-            return _totalItTime;
-        }
-    }
-
-    public void addItTime(double itTime)
-    {
-        _totalItTime += itTime;
-    }
-    public void makeIt()
-    {
-        this.gameObject.AddComponent<It>();
-    }
-    public void unmakeIt()
-    {
-        Destroy(GetComponent<It>());
     }
 
     #endregion

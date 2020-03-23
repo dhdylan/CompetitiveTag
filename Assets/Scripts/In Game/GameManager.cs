@@ -22,12 +22,6 @@ namespace Com.MyCompany.MyGame
         #endregion
 
 
-        #region Private Serialized Fields
-        [SerializeField]
-        private UIPlayerItTime uIPlayerItTime; 
-        #endregion
-
-
         #region Photon Callbacks
 
 

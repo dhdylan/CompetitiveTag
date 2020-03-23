@@ -18,3 +18,4 @@ MonoBehaviour:
   downButton: 115
   jumpButton: 32
   tagButton: 323
+  abilityButton: 113

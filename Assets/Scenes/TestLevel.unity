@@ -536,7 +536,6 @@ MonoBehaviour:
   playerPrefab: {fileID: 2709572529734522618, guid: 835477f83aa65f444b953c338384e967,
     type: 3}
   matchTime: 300
-  uIPlayerItTime: {fileID: 0}
 --- !u!4 &674386675
 Transform:
   m_ObjectHideFlags: 0
@@ -886,6 +885,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Main Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 8808519340867012934, guid: 155fd77fcc1be3c49b0deabcad090b18,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8808519340867013050, guid: 155fd77fcc1be3c49b0deabcad090b18,
         type: 3}
@@ -1530,7 +1534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025a40279d4d61c49b217e28e1648f5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upwardForce: 100
+  upwardForce: 10
 --- !u!4 &1803659435 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 624288866533713689, guid: 9c15d2f6bf673594f80972c8dcb3d4fb,

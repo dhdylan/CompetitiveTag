@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbc09af3a3c87dd4bb5ccc52fffa7dfc, type: 3}
+  m_Name: Pirate Abilities
+  m_EditorClassIdentifier: 
+  abilityPrefabs:
+  - {fileID: 4745353675068895106, guid: 34ef62134a5f18645b28473695717024, type: 3}

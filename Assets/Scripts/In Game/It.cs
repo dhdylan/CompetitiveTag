@@ -7,7 +7,6 @@ public class It : MonoBehaviour
     private PlayerManager thisPlayer;
     void Update()
     {
-        this.thisPlayer.addItTime(Time.deltaTime);
     }
 
     void Awake()
