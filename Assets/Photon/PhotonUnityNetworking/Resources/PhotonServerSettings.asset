@@ -41,5 +41,7 @@ MonoBehaviour:
   - togglePlayerListingDataReady
   - setObjectActive
   - SetRigidbody2DVelocityRPC
+  - RemoveUnnecessaryComponents
+  - ModifyComponents
   DisableAutoOpenWizard: 1
   ShowSettings: 1
